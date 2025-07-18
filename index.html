@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrysana Lifestyle Mart – Health & Wellness Store</title>
+    <meta name="description" content="Arrysana Lifestyle Mart is your trusted source for natural health and wellness essentials in Quezon City, Philippines. Shop supplements, snacks, skincare, and more.">
+    <link rel="icon" type="image/png" href="image/FAVICON.png">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2D7CA7;
+            --secondary: #23C3C9;
+            --accent: #507A8A;
+            --light-accent: #9FD2D6;
+            --dark: #3D5C6B;
+            --light: #F9FCFD;
+            --font-main: 'Montserrat', Arial, sans-serif;
+            --logo-blue: #2D7CA7;
+            --logo-teal: #23C3C9;
+            --logo-dark: #507A8A;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: var(--font-main);
+            background: var(--light);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background: var(--light);
+            color: var(--dark);
+            box-shadow: 0 2px 12px rgba(60,120,167,0.10);
+            padding: 0.5em 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1003;
+            transition: box-shadow 0.2s;
+        }
+        header.sticky {
+            box-shadow: 0 4px 18px rgba(45,124,167,0.16);
+            background: var(--light);
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            padding-left: 1em;
+        }
+        .logo-svg {
+            height: 60px;
+            width: 60px;
+            margin-right: 0.75em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+        .brand-title {
+            font-size: 1.55em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 0.1em;
+        }
+        .brand-sub {
+            font-size: 1em;
+            letter-spacing: 2px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        nav {
+            display: flex;
+            gap: 1.5em;
+            padding-right: 1em;
+            align-items: center;
+            transition: max-height 0.3s, opacity 0.3s;
+        }
+        nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1em;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: var(--secondary);
+        }
+        .cart-btn {
+            background: var(--secondary);
+            color: var(--dark);
+            border: none;
+            border-radius: 20px;
+            padding: 0.5em 1em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 1em;
+            transition: background 0.18s;
+            box-shadow: 0 2px 10px rgba(35,195,201,0.08);
+        }
+        .cart-btn:hover {
+            background: var(--primary);
+            color: var(--light);
+        }
+        .burger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 45px;
+            height: 45px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-right: 1em;
+        }
+        .burger span {
+            display: block;
+            height: 4px;
+            width: 28px;
+            background: var(--accent);
+            border-radius: 2px;
+            margin: 3.5px 0;
+            transition: all 0.25s;
+        }
+        @media (max-width: 900px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            .about-section, .contact-section, .testimonial-section, .delivery-section, .faq-section {
+                padding: 0.5em;
+            }
+            .cart-section {
+                width: 100vw;
+                max-width: 100vw;
+                padding: 1.2em 0.5em;
+            }
+        }
+        @media (max-width: 750px) {
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--light);
+                flex-direction: column;
+                gap: 0.3em;
+                padding: 0.5em 0 0.5em 0;
+                box-shadow: 0 2px 12px rgba(60,120,167,0.10);
+                max-height: 0;
+                overflow: hidden;
+                opacity: 0;
+                pointer-events: none;
+                z-index: 1004;
+            }
+            nav.open {
+                max-height: 350px;
+                opacity: 1;
+                pointer-events: all;
+            }
+            .cart-btn {
+                margin-left: 0;
+            }
+            .burger {
+                display: flex;
+            }
+            header {
+                flex-direction: row;
+            }
+        }
+        @media (max-width: 600px) {
+            header, nav {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .logo-container {
+                padding-left: 0.5em;
+            }
+            .brand-title {
+                font-size: 1em;
+            }
+            .hero-section .logo-svg {
+                height: 48px;
+                width: 48px;
+            }
+            .hero-section h1 {
+                font-size: 1.35em;
+            }
+            .products-section h2 {
+                font-size: 1.1em;
+            }
+            main {
+                padding-bottom: 4em;
+            }
+            .cart-section {
+                padding: 1em 0.5em;
+            }
+            footer {
+                padding: 1.2em 0.5em 0.5em 0.5em;
+            }
+        }
+        main {
+            flex: 1;
+            width: 100%;
+        }
+        .hero-section {
+            background: linear-gradient(120deg, var(--logo-teal) 0%, var(--logo-blue) 100%);
+            color: var(--light);
+            text-align: center;
+            padding: 2.5em 1em 2em 1em;
+            position: relative;
+        }
+        .hero-section .logo-svg {
+            margin: 0 auto 1em auto;
+            display: block;
+        }
+        .hero-section h1 {
+            font-size: 2.6em;
+            margin-bottom: 0.2em;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        .hero-section p {
+            font-size: 1.18em;
+            margin: 0 auto 1em auto;
+            max-width: 650px;
+            color: #eaf6fa;
+        }
+        .info-bar {
+            background: var(--light-accent);
+            color: var(--dark);
+            text-align: center;
+            font-size: 0.97em;
+            padding: 0.7em 0;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        .info-bar a {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+        .products-section {
+            padding: 2em 1em;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .products-section h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 1em;
+            font-weight: 700;
+            color: var(--logo-blue);
+            letter-spacing: 2px;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2em;
+        }
+        .product-card {
+            background: var(--light);
+            border-radius: 14px;
+            box-shadow: 0 2px 14px rgba(60,120,167,0.08);
+            padding: 1.25em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: box-shadow 0.2s;
+            border: 1.5px solid var(--light-accent);
+        }
+        .product-card:hover {
+            box-shadow: 0 4px 22px rgba(60,120,167,0.18);
+            border-color: var(--logo-teal);
+        }
+        .product-img {
+            width: 120px;
+            height: 120px;
+            background: var(--secondary);
+            border-radius: 10px;
+            margin-bottom: 1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .product-name {
+            font-size: 1.15em;
+            font-weight: 600;
+            margin-bottom: 0.18em;
+            text-align: center;
+            color: var(--accent);
+        }
+        .product-desc {
+            font-size: 1em;
+            color: var(--dark);
+            margin-bottom: 0.3em;
+            text-align: center;
+        }
+        .product-meta {
+            font-size: 0.96em;
+            margin-bottom: 0.8em;
+            text-align: center;
+            color: var(--logo-blue);
+        }
+        .add-cart-btn {
+            background: var(--logo-blue);
+            color: var(--light);
+            border: none;
+            border-radius: 16px;
+            padding: 0.4em 1em;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.18s;
+            box-shadow: 0 2px 8px rgba(45,124,167,0.08);
+        }
+        .add-cart-btn:hover {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+        .cart-section {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 360px;
+            max-width: 97vw;
+            height: 100vh;
+            background: var(--light);
+            box-shadow: -3px 0 16px rgba(45,124,167,0.11);
+            padding: 2em 1.2em 2em 1.2em;
+            transform: translateX(100%);
+            transition: transform 0.3s;
+            z-index: 1002;
+        }
+        .cart-section.open {
+            transform: translateX(0);
+        }
+        .cart-header {
+            font-size: 1.35em;
+            font-weight: 700;
+            margin-bottom: 1em;
+            color: var(--logo-blue);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .cart-items {
+            min-height: 120px;
+            margin-bottom: 1em;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5em 0;
+            border-bottom: 1px solid #eee;
+            font-size: 1em;
+        }
+        .cart-item-name {
+            flex: 1;
+        }
+        .cart-item-qty,
+        .cart-item-price {
+            margin: 0 0.5em;
+            white-space: nowrap;
+        }
+        .cart-footer {
+            border-top: 1px solid #eee;
+            padding-top: 1em;
+            font-size: 1.07em;
+        }
+        .cart-total {
+            font-weight: 700;
+            color: var(--logo-teal);
+        }
+        .checkout-btn {
+            background: var(--secondary);
+            color: var(--dark);
+            border: none;
+            border-radius: 20px;
+            padding: 0.6em 1.5em;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 0.5em;
+            transition: background 0.18s;
+            width: 100%;
+            box-shadow: 0 2px 8px rgba(35,195,201,0.09);
+        }
+        .checkout-btn:hover {
+            background: var(--logo-blue);
+            color: var(--light);
+        }
+        .close-cart-btn {
+            background: none;
+            border: none;
+            font-size: 1.3em;
+            cursor: pointer;
+            color: var(--logo-blue);
+            margin-left: 1em;
+        }
+        .about-section, .contact-section, .testimonial-section, .delivery-section, .faq-section {
+            max-width: 960px;
+            margin: 2em auto;
+            padding: 1em;
+            background: var(--light);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(45,124,167,0.07);
+            border: 1.5px solid var(--light-accent);
+        }
+        .about-section h2, .contact-section h2, .testimonial-section h2, .delivery-section h2, .faq-section h2 {
+            font-size: 1.45em;
+            font-weight: 700;
+            margin-bottom: 0.5em;
+            color: var(--logo-teal);
+            letter-spacing: 1px;
+        }
+        .core-values {
+            margin: 1em 0;
+            padding-left: 1em;
+        }
+        .core-values li {
+            margin-bottom: 0.45em;
+        }
+        /* TESTIMONIALS NEW STYLE */
+        .testimonial-section {
+            border: 2px solid var(--logo-teal);
+            background: #f7fafc;
+            box-shadow: 0 2px 14px rgba(45,124,167,0.06);
+        }
+        .testimonial-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5em;
+            margin: 2em 0 1em 0;
+        }
+        .testimonial {
+            background: #fff;
+            border-radius: 10px;
+            border-left: 6px solid var(--logo-teal);
+            padding: 1.1em 1.2em 0.8em 1.2em;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(45,124,167,0.07);
+            font-size: 1.08em;
+            margin-bottom: 0;
+        }
+        .testimonial-quote {
+            font-style: italic;
+            color: var(--dark);
+            margin-bottom: 0.55em;
+            display: block;
+            font-size: 1.08em;
+            line-height: 1.7;
+        }
+        .testimonial-author {
+            font-style: normal;
+            font-weight: 700;
+            color: var(--logo-teal);
+            display: block;
+            font-size: 0.98em;
+            letter-spacing: 1px;
+            margin-bottom: 0;
+            margin-top: 0.1em;
+            padding-left: 2px;
+        }
+        .testimonial-section h2 {
+            font-size: 1.35em;
+            font-weight: 700;
+            color: var(--logo-teal);
+            letter-spacing: 1px;
+            text-align: left;
+            margin-top: 0;
+            margin-bottom: 0.5em;
+        }
+        .delivery-list, .faq-list {
+            margin-left: 1em;
+        }
+        .faq-list li {
+            margin-bottom: 1em;
+        }
+        footer {
+            background: var(--accent);
+            color: var(--light);
+            padding: 2em 1em 1em 1em;
+            text-align: center;
+            margin-top: 2em;
+        }
+        .footer-links {
+            margin-bottom: 1em;
+        }
+        .footer-links a {
+            color: var(--logo-teal);
+            text-decoration: none;
+            margin: 0 0.8em;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .footer-info {
+            font-size: 0.98em;
+            margin-bottom: 0.5em;
+            letter-spacing: 1px;
+        }
+        .footer-info a {
+            color: var(--secondary);
+        }
+        .footer-copyright {
+            font-size: 0.92em;
+            color: #e0ecf2;
+        }
+    </style>
+</head>
+<body>
+    <header id="mainHeader">
+        <div class="logo-container">
+            <span class="logo-svg" aria-label="Arrysana Lifestyle Mart Logo">
+                <!-- Inline SVG from logo image1 -->
+                <svg width="60" height="60" viewBox="0 0 638 653" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="172" cy="87" r="60" fill="#23C3C9"/>
+                    <path d="M388 60L522 119C542 128 547 153 534 170L428 314C419 326 402 329 389 321L273 246C255 235 255 209 273 198L374 66C380 59 388 60 388 60Z" fill="#2D7CA7"/>
+                    <path d="M104 372L243 257C259 245 282 249 292 266L379 408C388 424 380 445 363 454L147 563C127 574 103 561 100 539L104 372Z" fill="#23C3C9"/>
+                    <path d="M376 324L484 380C502 390 505 414 491 427L323 582C309 595 286 591 276 574L187 423C176 406 182 383 200 374L353 301C366 295 376 324 376 324Z" fill="#507A8A"/>
+                </svg>
+            </span>
+            <span class="brand-text">
+                <span class="brand-title">ARRYSANA</span>
+                <span class="brand-sub">LIFESTYLE MART</span>
+            </span>
+        </div>
+        <button class="burger" id="burgerBtn" aria-label="Toggle navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav id="mainNav">
+            <a href="#home">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#products">Products</a>
+            <a href="#contact">Contact</a>
+            <a href="#faq">FAQ</a>
+            <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</button>
+        </nav>
+    </header>
+    <main>
+        <section class="hero-section" id="home">
+            <span class="logo-svg" aria-label="Arrysana Lifestyle Mart Logo">
+                <!-- Inline SVG from logo image1 -->
+                <svg width="80" height="80" viewBox="0 0 638 653" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="172" cy="87" r="60" fill="#23C3C9"/>
+                    <path d="M388 60L522 119C542 128 547 153 534 170L428 314C419 326 402 329 389 321L273 246C255 235 255 209 273 198L374 66C380 59 388 60 388 60Z" fill="#2D7CA7"/>
+                    <path d="M104 372L243 257C259 245 282 249 292 266L379 408C388 424 380 445 363 454L147 563C127 574 103 561 100 539L104 372Z" fill="#23C3C9"/>
+                    <path d="M376 324L484 380C502 390 505 414 491 427L323 582C309 595 286 591 276 574L187 423C176 406 182 383 200 374L353 301C366 295 376 324 376 324Z" fill="#507A8A"/>
+                </svg>
+            </span>
+            <h1>Live Better, Feel Better</h1>
+            <p>Welcome to Arrysana Lifestyle Mart! Your trusted source for natural health and wellness essentials. Discover curated products for a healthier, balanced, Filipino-friendly lifestyle—mula sa herbal supplements hanggang organic snacks at skincare.</p>
+        </section>
+        <div class="info-bar">
+            📍 #16 Kalantiaw Street, Brgy. Krus Na Ligas, Quezon City | Mon-Sat: 9AM–7PM, Sun: 10AM–4PM | <a href="mailto:hello@arrysanalifestylemart.com">hello@arrysanalifestylemart.com</a> | ☎️ +63 920 893 5742
+        </div>
+        <section class="about-section" id="about">
+            <h2>About Us</h2>
+            <p><strong>Our Story</strong><br>
+            Arrysana Lifestyle Mart was founded in 2020 by health advocates aiming to make natural wellness accessible to everyday Filipinos. From a community fair booth to a full-fledged lifestyle store, our journey reflects our commitment to holistic health.</p>
+            <p><strong>Our Purpose</strong><br>
+            Empower people to live healthier lives by offering affordable, trusted, and Filipino-approved wellness products.</p>
+            <p><strong>Our Core Values</strong></p>
+            <ul class="core-values">
+                <li>Kalusugan ay kayamanan</li>
+                <li>Transparency in ingredients and sourcing</li>
+                <li>Supporting local wellness brands and eco-conscious choices</li>
+            </ul>
+            <p><strong>Our Commitment</strong><br>
+            Safe, honest, and effective products—curated for you.</p>
+        </section>
+        <section class="products-section" id="products">
+            <h2>Our Wellness Essentials</h2>
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://via.placeholder.com/120?text=Turmeric+Capsules" alt="Turmeric Capsules">
+                    </div>
+                    <div class="product-name">Turmeric Capsules</div>
+                    <div class="product-desc">Natural anti-inflammatory, supports joint health.</div>
+                    <div class="product-meta">Qty: 12 | Price: ₱399.00</div>
+                    <button class="add-cart-btn" onclick="addToCart('Turmeric Capsules', 399, 1)">Add to Cart</button>
+                </div>
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://via.placeholder.com/120?text=Malunggay+Oil" alt="Malunggay Oil">
+                    </div>
+                    <div class="product-name">Malunggay Oil</div>
+                    <div class="product-desc">Rich in nutrients, great for skin and hair.</div>
+                    <div class="product-meta">Qty: 8 | Price: ₱229.00</div>
+                    <button class="add-cart-btn" onclick="addToCart('Malunggay Oil', 229, 1)">Add to Cart</button>
+                </div>
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://via.placeholder.com/120?text=Collagen+Drink" alt="Collagen Drink">
+                    </div>
+                    <div class="product-name">Collagen Drink</div>
+                    <div class="product-desc">Promotes youthful skin and healthy joints.</div>
+                    <div class="product-meta">Qty: 10 | Price: ₱549.00</div>
+                    <button class="add-cart-btn" onclick="addToCart('Collagen Drink', 549, 1)">Add to Cart</button>
+                </div>
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://via.placeholder.com/120?text=Virgin+Coconut+Oil" alt="Virgin Coconut Oil">
+                    </div>
+                    <div class="product-name">Virgin Coconut Oil</div>
+                    <div class="product-desc">Immunity booster, versatile wellness oil.</div>
+                    <div class="product-meta">Qty: 5 | Price: ₱299.00</div>
+                    <button class="add-cart-btn" onclick="addToCart('Virgin Coconut Oil', 299, 1)">Add to Cart</button>
+                </div>
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://via.placeholder.com/120?text=Keto+Snack" alt="Keto Snack">
+                    </div>
+                    <div class="product-name">Keto Snack (Almond Bar)</div>
+                    <div class="product-desc">Sugar-free, perfect for low-carb diets.</div>
+                    <div class="product-meta">Qty: 15 | Price: ₱119.00</div>
+                    <button class="add-cart-btn" onclick="addToCart('Keto Snack (Almond Bar)', 119, 1)">Add to Cart</button>
+                </div>
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://via.placeholder.com/120?text=Organic+Shampoo" alt="Organic Shampoo">
+                    </div>
+                    <div class="product-name">Organic Shampoo</div>
+                    <div class="product-desc">Paraben-free, gentle for daily use.</div>
+                    <div class="product-meta">Qty: 7 | Price: ₱179.00</div>
+                    <button class="add-cart-btn" onclick="addToCart('Organic Shampoo', 179, 1)">Add to Cart</button>
+                </div>
+                <!-- More products can be added following this structure -->
+            </div>
+        </section>
+        <section class="testimonial-section">
+            <h2>Testimonials</h2>
+            <div class="testimonial-list">
+                <div class="testimonial">
+                    <span class="testimonial-quote">“The staff is super knowledgeable. I always get helpful advice when choosing supplements.”</span>
+                    <span class="testimonial-author">Mark, fitness trainer</span>
+                </div>
+                <div class="testimonial">
+                    <span class="testimonial-quote">“Arrysana has everything I need for my plant-based lifestyle—plus the ambiance is so relaxing!”</span>
+                    <span class="testimonial-author">Aubrey, yoga instructor</span>
+                </div>
+                <div class="testimonial">
+                    <span class="testimonial-quote">“Mas pinipili ko na bumili dito kaysa sa malalaking malls. Mas curated ang items at feel ko safe talaga.”</span>
+                    <span class="testimonial-author">Grace, working mom</span>
+                </div>
+            </div>
+        </section>
+        <section class="delivery-section">
+            <h2>Delivery Information</h2>
+            <ul class="delivery-list">
+                <li>Same-day and next-day delivery within Metro Manila via Lalamove and GrabExpress</li>
+                <li>Minimum Order: ₱500</li>
+                <li>Standard Delivery Fee: ₱79 – ₱149</li>
+                <li>Payment: GCash, Maya, BPI transfer, Cash on Delivery</li>
+                <li>Cut-off time for same-day delivery: 3:00 PM</li>
+            </ul>
+        </section>
+        <section class="faq-section" id="faq">
+            <h2>Frequently Asked Questions</h2>
+            <ul class="faq-list">
+                <li><strong>Q: Are your supplements FDA-approved?</strong><br>
+                <em>A:</em> Yes, all supplements we carry are FDA-registered and sourced from verified suppliers.</li>
+                <li><strong>Q: Do you carry local or indigenous Filipino wellness products?</strong><br>
+                <em>A:</em> Opo! We support local brands and carry items like banaba tea, sambong capsules, and lagundi syrup.</li>
+                <li><strong>Q: Can I request products not on your shelves?</strong><br>
+                <em>A:</em> Definitely! Just message us and we’ll do our best to source them for you.</li>
+            </ul>
+        </section>
+        <section class="contact-section" id="contact">
+            <h2>Contact Us</h2>
+            <p>
+                <strong>Visit or Reach Out:</strong><br>
+                📍 #16 Kalantiaw Street, Barangay Krus Na Ligas, Quezon City, NCR, 1101<br>
+                ☎️ +63 920 893 5742<br>
+                📧 <a href="mailto:hello@arrysanalifestylemart.com">hello@arrysanalifestylemart.com</a><br>
+                🌐 <a href="https://arrysanalifestylemart.com" target="_blank">arrysanalifestylemart.com</a><br>
+                <br>
+                <strong>Business Hours:</strong><br>
+                Monday to Saturday: 9:00 AM – 7:00 PM<br>
+                Sunday: 10:00 AM – 4:00 PM
+            </p>
+            <p>
+                <strong>Additional Information:</strong><br>
+                Business Registration No.: 020145983-QZN<br>
+                TIN: 007-234-185-000<br>
+                Mayor’s Permit: Issued by Quezon City LGU – Valid for 2024<br>
+                FDA Notified Distributor: Licensed suppliers<br>
+                DTI Registered: Arrysana Wellness & Lifestyle Trading
+            </p>
+        </section>
+        <!-- Cart Sidebar -->
+        <aside class="cart-section" id="cartSidebar">
+            <div class="cart-header">
+                Cart
+                <button class="close-cart-btn" onclick="toggleCart()" aria-label="Close cart">&times;</button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <div style="color:#888;text-align:center;">Your cart is empty.</div>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">Total: ₱<span id="cartTotal">0.00</span></div>
+                <button class="checkout-btn" onclick="checkout()" disabled id="checkoutBtn">Checkout</button>
+            </div>
+        </aside>
+    </main>
+    <footer>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="refund-policy.html">Refund Policy</a>
+        </div>
+        <div class="footer-info">
+            Arrysana Lifestyle Mart – Health and Wellness Store<br>
+            #16 Kalantiaw Street, Barangay Krus Na Ligas, Quezon City, NCR, 1101, Philippines<br>
+            Phone: +63 920 893 5742 | Email: <a href="mailto:hello@arrysanalifestylemart.com">hello@arrysanalifestylemart.com</a>
+        </div>
+        <div class="footer-copyright">
+            &copy; 2025 Arrysana Lifestyle Mart. All Rights Reserved.
+        </div>
+    </footer>
+    <script>
+        // Sticky header effect
+        (function() {
+            var header = document.getElementById('mainHeader');
+            var lastScroll = 0;
+            window.addEventListener('scroll', function() {
+                var currScroll = window.scrollY || document.documentElement.scrollTop;
+                if (currScroll > 12) {
+                    if (!header.classList.contains('sticky')) {
+                        header.classList.add('sticky');
+                    }
+                } else {
+                    if (header.classList.contains('sticky')) {
+                        header.classList.remove('sticky');
+                    }
+                }
+                lastScroll = currScroll;
+            });
+        })();
+
+        // Burger menu logic
+        (function() {
+            var burgerBtn = document.getElementById('burgerBtn');
+            var nav = document.getElementById('mainNav');
+            burgerBtn.addEventListener('click', function() {
+                var isOpen = nav.classList.toggle('open');
+                burgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                // Animate burger icon
+                if (isOpen) {
+                    burgerBtn.children[0].style.transform = "rotate(45deg) translate(6px, 6px)";
+                    burgerBtn.children[1].style.opacity = "0";
+                    burgerBtn.children[2].style.transform = "rotate(-45deg) translate(7px, -7px)";
+                } else {
+                    burgerBtn.children[0].style.transform = "";
+                    burgerBtn.children[1].style.opacity = "1";
+                    burgerBtn.children[2].style.transform = "";
+                }
+            });
+            // Close nav when clicking link (mobile only)
+            Array.from(nav.querySelectorAll('a, button.cart-btn')).forEach(function(el) {
+                el.addEventListener('click', function() {
+                    if (window.innerWidth <= 750 && nav.classList.contains('open')) {
+                        nav.classList.remove('open');
+                        burgerBtn.setAttribute('aria-expanded', 'false');
+                        burgerBtn.children[0].style.transform = "";
+                        burgerBtn.children[1].style.opacity = "1";
+                        burgerBtn.children[2].style.transform = "";
+                    }
+                });
+            });
+            // Responsive: close nav on resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 750 && nav.classList.contains('open')) {
+                    nav.classList.remove('open');
+                    burgerBtn.setAttribute('aria-expanded', 'false');
+                    burgerBtn.children[0].style.transform = "";
+                    burgerBtn.children[1].style.opacity = "1";
+                    burgerBtn.children[2].style.transform = "";
+                }
+            });
+        })();
+
+        // Simple cart logic (for demo, non-persistent)
+        let cart = [];
+        function addToCart(name, price, qty) {
+            let found = cart.find(item => item.name === name);
+            if (found) {
+                found.qty += qty;
+            } else {
+                cart.push({ name, price, qty });
+            }
+            renderCart();
+        }
+        function renderCart() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            cartItemsDiv.innerHTML = '';
+            let total = 0;
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<div style="color:#888;text-align:center;">Your cart is empty.</div>';
+                document.getElementById('checkoutBtn').disabled = true;
+            } else {
+                cart.forEach((item, i) => {
+                    total += item.price * item.qty;
+                    cartItemsDiv.innerHTML += `
+                        <div class="cart-item">
+                            <span class="cart-item-name">${item.name}</span>
+                            <span class="cart-item-qty">x${item.qty}</span>
+                            <span class="cart-item-price">₱${item.price.toFixed(2)}</span>
+                            <button style="background:none;border:none;color:#e74c3c;font-size:1.1em;cursor:pointer;" onclick="removeCartItem(${i})" aria-label="Remove item">&times;</button>
+                        </div>
+                    `;
+                });
+                document.getElementById('checkoutBtn').disabled = false;
+            }
+            document.getElementById('cartTotal').textContent = total.toFixed(2);
+            document.getElementById('cartCount').textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+        }
+        function removeCartItem(index) {
+            cart.splice(index, 1);
+            renderCart();
+        }
+        function toggleCart() {
+            document.getElementById('cartSidebar').classList.toggle('open');
+        }
+        function checkout() {
+            // Go to order-summary.html
+            window.location.href = "order-summary.html";
+        }
+    </script>
+</body>
+</html>
