@@ -52,6 +52,13 @@
             box-shadow: 0 4px 18px rgba(45,124,167,0.16);
             background: var(--light);
         }
+        .header-inner {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
         .logo-container {
             display: flex;
             align-items: center;
@@ -126,7 +133,10 @@
             background: none;
             border: none;
             cursor: pointer;
-            margin-right: 1em;
+            position: absolute;
+            right: 2.5vw;
+            top: 50%;
+            transform: translateY(-50%);
         }
         .burger span {
             display: block;
@@ -177,9 +187,13 @@
             }
             .burger {
                 display: flex;
+                right: 2vw;
             }
             header {
                 flex-direction: row;
+            }
+            .header-inner {
+                min-height: 70px;
             }
         }
         @media (max-width: 600px) {
@@ -439,7 +453,6 @@
         .core-values li {
             margin-bottom: 0.45em;
         }
-        /* TESTIMONIALS NEW STYLE */
         .testimonial-section {
             border: 2px solid var(--logo-teal);
             background: #f7fafc;
@@ -495,6 +508,44 @@
         .faq-list li {
             margin-bottom: 1em;
         }
+        /* Floating cart button */
+        .floating-cart-btn {
+            position: fixed;
+            bottom: 2.5vw;
+            right: 2.5vw;
+            z-index: 9999;
+            background: var(--secondary);
+            border-radius: 50%;
+            box-shadow: 0 4px 18px rgba(35,195,201,0.16);
+            width: 62px;
+            height: 62px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: box-shadow 0.18s, background 0.18s;
+        }
+        .floating-cart-btn:hover {
+            background: var(--primary);
+            box-shadow: 0 6px 24px rgba(45,124,167,0.22);
+        }
+        .floating-cart-icon {
+            width: 34px;
+            height: 34px;
+            display: block;
+        }
+        @media (max-width: 600px) {
+            .floating-cart-btn {
+                bottom: 16px;
+                right: 16px;
+                width: 54px;
+                height: 54px;
+            }
+            .floating-cart-icon {
+                width: 28px;
+                height: 28px;
+            }
+        }
         footer {
             background: var(--accent);
             color: var(--light);
@@ -531,34 +582,36 @@
 </head>
 <body>
     <header id="mainHeader">
-        <div class="logo-container">
-            <span class="logo-svg" aria-label="Arrysana Lifestyle Mart Logo">
-                <!-- Inline SVG from logo image1 -->
-                <svg width="60" height="60" viewBox="0 0 638 653" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="172" cy="87" r="60" fill="#23C3C9"/>
-                    <path d="M388 60L522 119C542 128 547 153 534 170L428 314C419 326 402 329 389 321L273 246C255 235 255 209 273 198L374 66C380 59 388 60 388 60Z" fill="#2D7CA7"/>
-                    <path d="M104 372L243 257C259 245 282 249 292 266L379 408C388 424 380 445 363 454L147 563C127 574 103 561 100 539L104 372Z" fill="#23C3C9"/>
-                    <path d="M376 324L484 380C502 390 505 414 491 427L323 582C309 595 286 591 276 574L187 423C176 406 182 383 200 374L353 301C366 295 376 324 376 324Z" fill="#507A8A"/>
-                </svg>
-            </span>
-            <span class="brand-text">
-                <span class="brand-title">ARRYSANA</span>
-                <span class="brand-sub">LIFESTYLE MART</span>
-            </span>
+        <div class="header-inner">
+            <div class="logo-container">
+                <span class="logo-svg" aria-label="Arrysana Lifestyle Mart Logo">
+                    <!-- Inline SVG from logo image1 -->
+                    <svg width="60" height="60" viewBox="0 0 638 653" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="172" cy="87" r="60" fill="#23C3C9"/>
+                        <path d="M388 60L522 119C542 128 547 153 534 170L428 314C419 326 402 329 389 321L273 246C255 235 255 209 273 198L374 66C380 59 388 60 388 60Z" fill="#2D7CA7"/>
+                        <path d="M104 372L243 257C259 245 282 249 292 266L379 408C388 424 380 445 363 454L147 563C127 574 103 561 100 539L104 372Z" fill="#23C3C9"/>
+                        <path d="M376 324L484 380C502 390 505 414 491 427L323 582C309 595 286 591 276 574L187 423C176 406 182 383 200 374L353 301C366 295 376 324 376 324Z" fill="#507A8A"/>
+                    </svg>
+                </span>
+                <span class="brand-text">
+                    <span class="brand-title">ARRYSANA</span>
+                    <span class="brand-sub">LIFESTYLE MART</span>
+                </span>
+            </div>
+            <button class="burger" id="burgerBtn" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav id="mainNav">
+                <a href="#home">Home</a>
+                <a href="#about">About Us</a>
+                <a href="#products">Products</a>
+                <a href="#contact">Contact</a>
+                <a href="#faq">FAQ</a>
+                <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</button>
+            </nav>
         </div>
-        <button class="burger" id="burgerBtn" aria-label="Toggle navigation" aria-expanded="false">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <nav id="mainNav">
-            <a href="#home">Home</a>
-            <a href="#about">About Us</a>
-            <a href="#products">Products</a>
-            <a href="#contact">Contact</a>
-            <a href="#faq">FAQ</a>
-            <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cartCount">0</span>)</button>
-        </nav>
     </header>
     <main>
         <section class="hero-section" id="home">
@@ -572,7 +625,7 @@
                 </svg>
             </span>
             <h1>Live Better, Feel Better</h1>
-            <p>Welcome to Arrysana Lifestyle Mart! Your trusted source for natural health and wellness essentials. Discover curated products for a healthier, balanced, Filipino-friendly lifestyle—mula sa herbal supplements hanggang organic snacks at skincare.</p>
+            <p>Welcome to Arrysana Lifestyle Mart! Your trusted source for natural health and wellness essentials. Discover curated products for a healthier, balanced, Filipino-friendly lifestyle—mula sa herbal supplements hingga organic snacks at skincare.</p>
         </section>
         <div class="info-bar">
             📍 #16 Kalantiaw Street, Brgy. Krus Na Ligas, Quezon City | Mon-Sat: 9AM–7PM, Sun: 10AM–4PM | <a href="mailto:hello@arrysanalifestylemart.com">hello@arrysanalifestylemart.com</a> | ☎️ +63 920 893 5742
@@ -732,6 +785,18 @@
                 <button class="checkout-btn" onclick="checkout()" disabled id="checkoutBtn">Checkout</button>
             </div>
         </aside>
+        <!-- Floating Cart Button -->
+        <button class="floating-cart-btn" id="floatingCartBtn" title="View Cart">
+            <svg class="floating-cart-icon" fill="none" viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="18" fill="#fff"/>
+                <g>
+                  <path d="M10 14h16l-2 10H12l-2-10z" stroke="#2D7CA7" stroke-width="2" fill="#23C3C9"/>
+                  <circle cx="14.5" cy="27" r="2" fill="#507A8A"/>
+                  <circle cx="21.5" cy="27" r="2" fill="#507A8A"/>
+                  <rect x="8" y="11" width="20" height="3" rx="1.5" fill="#2D7CA7"/>
+                </g>
+            </svg>
+        </button>
     </main>
     <footer>
         <div class="footer-links">
@@ -856,6 +921,11 @@
             // Go to order-summary.html
             window.location.href = "order-summary.html";
         }
+
+        // Floating Cart Button logic
+        document.getElementById('floatingCartBtn').addEventListener('click', function() {
+            toggleCart();
+        });
     </script>
 </body>
 </html>
