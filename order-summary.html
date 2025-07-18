@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary | Arrysana Lifestyle Mart</title>
+    <meta name="description" content="Review your order, submit your details, and receive confirmation for your wellness essentials purchase at Arrysana Lifestyle Mart.">
+    <link rel="icon" type="image/png" href="image/FAVICON.png">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2D7CA7;
+            --secondary: #23C3C9;
+            --accent: #507A8A;
+            --light-accent: #9FD2D6;
+            --dark: #3D5C6B;
+            --light: #F9FCFD;
+            --font-main: 'Montserrat', Arial, sans-serif;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: var(--font-main);
+            background: var(--light);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background: var(--light);
+            color: var(--dark);
+            box-shadow: 0 2px 12px rgba(60,120,167,0.08);
+            padding: 0.5em 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1003;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            padding-left: 1em;
+        }
+        .logo-svg {
+            height: 48px;
+            width: 48px;
+            margin-right: 0.75em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+        .brand-title {
+            font-size: 1.25em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 0.1em;
+        }
+        .brand-sub {
+            font-size: 0.93em;
+            letter-spacing: 2px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        main {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2em 1em;
+        }
+        .summary-container {
+            max-width: 500px;
+            width: 100%;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 22px rgba(60,120,167,0.08);
+            border: 2px solid var(--light-accent);
+            padding: 2em 1.2em;
+            margin-bottom: 2em;
+        }
+        .summary-header {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1em;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .order-items {
+            margin-bottom: 1.5em;
+        }
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 0.6em 0;
+            border-bottom: 1px solid #eee;
+            font-size: 1em;
+        }
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        .order-name {
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .order-meta {
+            font-size: 0.97em;
+            color: var(--dark);
+            margin-top: 2px;
+        }
+        .order-total {
+            font-size: 1.17em;
+            font-weight: 700;
+            color: var(--secondary);
+            text-align: right;
+            margin-bottom: 1.2em;
+        }
+        .form-section {
+            margin-bottom: 1.5em;
+        }
+        .form-group {
+            margin-bottom: 1em;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.3em;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.65em;
+            border-radius: 7px;
+            border: 1px solid var(--light-accent);
+            font-size: 1.05em;
+            font-family: var(--font-main);
+            background: #f7fafc;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+        .form-group textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+        .submit-btn {
+            background: var(--primary);
+            color: var(--light);
+            border: none;
+            border-radius: 18px;
+            padding: 0.7em 1.6em;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1.12em;
+            width: 100%;
+            margin-top: 0.7em;
+            margin-bottom: 0.4em;
+            transition: background 0.18s;
+            box-shadow: 0 2px 10px rgba(45,124,167,0.07);
+        }
+        .submit-btn:hover {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+        .confirmation-message {
+            display: none;
+            margin-top: 1.5em;
+            background: #e8fdfc;
+            color: var(--dark);
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 1.5em 1em;
+            text-align: center;
+            font-size: 1.07em;
+            font-weight: 500;
+            box-shadow: 0 2px 10px rgba(35,195,201,0.07);
+        }
+        .confirmation-message.success {
+            display: block;
+        }
+        .confirmation-title {
+            font-size: 1.25em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.6em;
+        }
+        .confirmation-details {
+            margin-bottom: 1em;
+            color: var(--dark);
+            font-size: 1em;
+            line-height: 1.7;
+        }
+        .confirmation-important {
+            color: #e74c3c;
+            font-weight: 700;
+        }
+        footer {
+            background: var(--accent);
+            color: var(--light);
+            padding: 2em 1em 1em 1em;
+            text-align: center;
+        }
+        .footer-links {
+            margin-bottom: 1em;
+        }
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            margin: 0 0.8em;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .footer-info {
+            font-size: 0.98em;
+            margin-bottom: 0.5em;
+            letter-spacing: 1px;
+        }
+        .footer-info a {
+            color: var(--light-accent);
+        }
+        .footer-copyright {
+            font-size: 0.92em;
+            color: #e0ecf2;
+        }
+        @media (max-width: 600px) {
+            main {
+                padding: 1em 0.2em;
+            }
+            .summary-container {
+                padding: 1.2em 0.5em;
+                border-radius: 10px;
+            }
+            .confirmation-message {
+                padding: 1em 0.3em;
+            }
+            header {
+                padding: 0.5em 0.2em;
+            }
+            .brand-title {
+                font-size: 1em;
+            }
+            .logo-container {
+                padding-left: 0.3em;
+            }
+            footer {
+                padding: 1em 0.3em 0.4em 0.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <span class="logo-svg" aria-label="Arrysana Lifestyle Mart Logo">
+                <!-- Inline SVG logo -->
+                <svg width="48" height="48" viewBox="0 0 638 653" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="172" cy="87" r="60" fill="#23C3C9"/>
+                    <path d="M388 60L522 119C542 128 547 153 534 170L428 314C419 326 402 329 389 321L273 246C255 235 255 209 273 198L374 66C380 59 388 60 388 60Z" fill="#2D7CA7"/>
+                    <path d="M104 372L243 257C259 245 282 249 292 266L379 408C388 424 380 445 363 454L147 563C127 574 103 561 100 539L104 372Z" fill="#23C3C9"/>
+                    <path d="M376 324L484 380C502 390 505 414 491 427L323 582C309 595 286 591 276 574L187 423C176 406 182 383 200 374L353 301C366 295 376 324 376 324Z" fill="#507A8A"/>
+                </svg>
+            </span>
+            <span class="brand-text">
+                <span class="brand-title">ARRYSANA</span>
+                <span class="brand-sub">LIFESTYLE MART</span>
+            </span>
+        </div>
+    </header>
+    <main>
+        <div class="summary-container" id="orderSummary">
+            <div class="summary-header">Order Review & Submission</div>
+            <div class="order-items" id="orderItems">
+                <!-- Example static items, replace with dynamic JS if integrating -->
+                <div class="order-item">
+                    <div>
+                        <span class="order-name">Turmeric Capsules</span>
+                        <div class="order-meta">Qty: 2</div>
+                    </div>
+                    <div>₱798.00</div>
+                </div>
+                <div class="order-item">
+                    <div>
+                        <span class="order-name">Organic Shampoo</span>
+                        <div class="order-meta">Qty: 1</div>
+                    </div>
+                    <div>₱179.00</div>
+                </div>
+                <div class="order-total">Total: ₱977.00</div>
+            </div>
+            <form class="form-section" id="checkoutForm" autocomplete="on">
+                <div class="form-group">
+                    <label for="customerName">Full Name</label>
+                    <input type="text" name="customerName" id="customerName" required autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="customerEmail">Email Address</label>
+                    <input type="email" name="customerEmail" id="customerEmail" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Mobile Number</label>
+                    <input type="tel" name="customerPhone" id="customerPhone" required autocomplete="tel">
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress">Delivery Address</label>
+                    <textarea name="customerAddress" id="customerAddress" required autocomplete="street-address"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="paymentMethod">Preferred Payment Method</label>
+                    <select name="paymentMethod" id="paymentMethod" required>
+                        <option value="" disabled selected>Select a payment method</option>
+                        <option value="GCash">GCash</option>
+                        <option value="Maya">Maya</option>
+                        <option value="BPI">BPI Transfer</option>
+                        <option value="COD">Cash on Delivery</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="orderNotes">Additional Notes (optional)</label>
+                    <textarea name="orderNotes" id="orderNotes" placeholder="Let us know any special requests or product preferences."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Order</button>
+            </form>
+            <div class="confirmation-message" id="confirmationMessage">
+                <div class="confirmation-title">Order Submitted Successfully!</div>
+                <div class="confirmation-details">
+                    Thank you for placing your order with Arrysana Lifestyle Mart.<br>
+                    Within a few hours, one of our team members will reach out to you via your preferred contact method to verify your order details, confirm product colors and availability, and address any special requests.<br><br>
+                    Please review and confirm your order once contacted.<br>
+                    After your confirmation, a secure payment link will be sent, tailored to your selected payment option.
+                </div>
+                <div class="confirmation-details confirmation-important">
+                    Kindly complete your payment within <strong>24 hours</strong> of receiving the link to avoid automatic order cancellation. We appreciate your prompt attention and look forward to supporting your wellness journey!
+                </div>
+                <div class="confirmation-details" style="margin-top:0.5em;">
+                    If you have questions, feel free to contact us at <a href="mailto:hello@arrysanalifestylemart.com">hello@arrysanalifestylemart.com</a> or call +63 920 893 5742.
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="refund-policy.html">Refund Policy</a>
+        </div>
+        <div class="footer-info">
+            Arrysana Lifestyle Mart – Health and Wellness Store<br>
+            #16 Kalantiaw Street, Barangay Krus Na Ligas, Quezon City, NCR, 1101, Philippines<br>
+            Phone: +63 920 893 5742 | Email: <a href="mailto:hello@arrysanalifestylemart.com">hello@arrysanalifestylemart.com</a>
+        </div>
+        <div class="footer-copyright">
+            &copy; 2025 Arrysana Lifestyle Mart. All Rights Reserved.
+        </div>
+    </footer>
+    <script>
+        // Responsive header on scroll (optional, keeps style consistent)
+        (function() {
+            var header = document.querySelector('header');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 12) {
+                    header.classList.add('sticky');
+                } else {
+                    header.classList.remove('sticky');
+                }
+            });
+        })();
+
+        // Form submission handler
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('checkoutForm').style.display = 'none';
+            document.getElementById('confirmationMessage').classList.add('success');
+            window.scrollTo({top: document.getElementById('orderSummary').offsetTop, behavior: 'smooth'});
+        });
+    </script>
+</body>
+</html>
