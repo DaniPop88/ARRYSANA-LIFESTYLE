@@ -121,3 +121,21 @@ section h2,.section-title { color:var(--brand); }
 .refresh-hero-media-3 { border-radius:80px 8px 80px 8px; }
 .refresh-hero-media-4 { border-radius:8px; box-shadow:12px 12px 0 color-mix(in srgb,currentColor 12%,transparent); }
 @media(max-width:767px) { .refresh-hero-media { margin-top:1.5rem; } .refresh-hero-media img { height:260px; } .refresh-hero-media-1 { border-radius:70px 70px 8px 8px; } }
+
+/* === Quick fix 2026-11-07: layout cleanup === */
+/* Product photos fill the card instead of sitting small in the middle */
+.product-card .product-image, .product-card .product-img, .product-card > div:first-child:has(img) { width: 100%; padding: 0; background: none; }
+.product-card img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; margin: 0 0 18px; border-radius: 22px 0 22px 0; background: #fff; }
+.product-card { display: flex; flex-direction: column; }
+.product-card button { margin-top: auto; }
+/* Core values: clean cards, no stray bullets */
+.core-values { list-style: none; padding: 0; margin: 12px 0 20px; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+.core-values li { list-style: none; border: 1px solid var(--line); border-left: 4px solid var(--brand); border-radius: 14px; padding: 14px 16px; background: var(--surface); }
+.core-values li::marker { content: none; }
+/* Info bar: tidy items */
+.info-bar { text-align: center; line-height: 1.7; }
+@media (max-width: 900px) { .core-values { grid-template-columns: 1fr; } }
+@media (max-width: 600px) {
+  .info-bar { text-align: left; font-size: .92rem; }
+  .product-card img { aspect-ratio: 4 / 3; }
+}
